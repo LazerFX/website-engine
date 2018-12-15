@@ -1,0 +1,6 @@
+# Remove bin folder
+**/bin
+
+# Remove obj folder
+**/obj
+
