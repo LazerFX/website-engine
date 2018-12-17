@@ -13,7 +13,7 @@ trigger:
 
 variables:
   dockerFile: 'engine/DOCKERFILE'
-  imageName: 'engine:$(Build.BuildNumber)'
+  imageName: 'lazerfx/engine:$(Build.BuildNumber)'
 
 steps:
   - checkout: self
