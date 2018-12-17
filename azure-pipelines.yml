@@ -6,11 +6,36 @@
 pool:
   vmImage: 'Ubuntu 16.04'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+trigger:
+  branches:
+    include:
+      - master
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+variables:
+  dockerFile: 'engine/DOCKERFILE'
+  imageName: 'engine:$(Build.BuildNumber)'
+
+steps:
+  - checkout: self
+    clean: true
+
+  - task: Docker@1
+    displayName: Build the Service Image
+    inputs:
+      command: 'Build an Image'
+      containerregistrytype: 'Container Registry'
+      dockerRegistryEndpoint: Heroku
+      useDefaultContext: false
+      buildContext: /home/vsts/work/1/s/engine
+      dockerFile: $(dockerFile)
+      imageName: $(imageName)
+  
+  - task: Docker@1
+    displayName: Push Service Image to Heroku
+    inputs:
+      command: 'Push an Image'
+      containerregistrytype: Container Registry
+      dockerRegistryEndpoint: Heroku
+      useDefaultContext: false
+      buildContext: /home/vsts/work/1/s/engine
+      imageName: $(imageName)
