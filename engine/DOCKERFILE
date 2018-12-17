@@ -1,0 +1,21 @@
+FROM microsoft/dotnet:aspnetcore-runtime as runtime
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM microsoft/dotnet:sdk AS restore
+WORKDIR /app
+
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
+
+FROM restore AS publish
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+FROM runtime AS release
+# Build runtime image
+COPY --from=publish /app/out .
+ENTRYPOINT ["dotnet", "engine.dll"]
