@@ -11,12 +11,12 @@ steps:
   inputs:
     command: 'Build an Image'
     containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: 'gcr-tutorial'
+    dockerRegistryEndpoint: 'google-lazerfx-website'
     imageName: '$(DockerImageName):$(Build.BuildId)'
 - task: Docker@1
   displayName: 'Publish image'
   inputs:
     command: 'Push an image'
     containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: 'gcr-tutorial'
+    dockerRegistryEndpoint: 'google-lazerfx-website'
     imageName: '$(DockerImageName):$(Build.BuildId)'
