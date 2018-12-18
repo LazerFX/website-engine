@@ -9,6 +9,7 @@ steps:
 - task: Docker@1
   displayName: 'Build image'
   inputs:
+    dockerFile: engine/DOCKERFILE
     command: 'Build an Image'
     containerregistrytype: 'Container Registry'
     dockerRegistryEndpoint: 'google-lazerfx-website'
@@ -16,6 +17,7 @@ steps:
 - task: Docker@1
   displayName: 'Publish image'
   inputs:
+    dockerFile: engine/DOCKERFILE
     command: 'Push an image'
     containerregistrytype: 'Container Registry'
     dockerRegistryEndpoint: 'google-lazerfx-website'
