@@ -1,0 +1,16 @@
+version: '3'
+services:
+  website-engine:
+    build:
+      context: ./
+      dockerfile: DOCKERFILE
+    ports:
+      - 443:443
+    volumes:
+      - $APPDATA/Microsoft/UserSecrets/:/root/.microsoft/usersecrets
+      - $APPDATA/ASP.NET/Https:/root/.aspnet/https/
+    environment: 
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80;https://+:443
+      Kestrel__Certificates__Default__Path: /root/.aspnet/https/website-engine.pfx
+      Kestrel__Certifiactes__Default__Password: websitePassword
